@@ -13,9 +13,15 @@
           <a href="/profile" class="nav-link">Profile</a>
         </li>
         <li class="nav-item">
+          <a href="/search" class="nav-link">New</a>
+        </li>
+        <li class="nav-item">
           <a href="/logout" class="nav-link">Logout</a>
         </li>
       @else
+        <li class="nav-item">
+          <a href="/search" class="nav-link">New</a>
+        </li>
         <li class="nav-item">
           <a href="/login" class="nav-link">Login</a>
         </li>

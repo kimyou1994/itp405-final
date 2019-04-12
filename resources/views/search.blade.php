@@ -4,8 +4,8 @@
 
 @section('main')
 	<form action="/notelists" method="get">
-    	<input type="text" name="search">
-    	<button type="submit">Search</button>
+    	<input type="text" id ="url" name="url">
+    	<button type="submit">Take Note</button>
    		<a href="/" class="btn btn-link">Clear</a>
   	</form>
 @endsection

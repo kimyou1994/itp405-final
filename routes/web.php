@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'SearchController@index');
+Route::get('/search', 'SearchController@index');
 Route::get('/notelists','NoteController@index');
 
 Route::get('/signup', 'SignUpController@index');
@@ -21,4 +21,7 @@ Route::get('/login', 'LoginController@index');
 Route::post('/login', 'LoginController@login');
 Route::get('/logout', 'LoginController@logout');
 
-Route::get('/profile', 'AdminController@index');
+
+Route::middleware(['authenticated'])->group(function() {
+	Route::get('/profile', 'AdminController@index');
+})
