@@ -19,8 +19,18 @@ class NoteController extends Controller
 	    if (preg_match($shortUrlRegex, $url, $matches)) {
 	        $youtube_id = $matches[count($matches) - 1];
 	    }
+	    // Get video feed info (xml) from youtube, but only the title | http://php.net/manual/en/function.file-get-contents.php
+	    $video_feed = file_get_contents("http://www.youtube.com/oembed?url=".$url."&format=json");
+		// xml to object | http://php.net/manual/en/function.simplexml-load-string.php
+		//$video_obj = simplexml_load_string($video_feed);
+		// Get the title string to a variable
+		//$video_str = $video_obj->entry->title;
+		$data = json_decode($video_feed);
     	return view('note', [
-    		'url' => 'https://www.youtube.com/embed/' . $youtube_id
+    		'url' => 'https://www.youtube.com/embed/' . $youtube_id,
+    		'author' => $data->author_name,
+    		'title' => $data->title,
+    		'channel' => $data->author_url
     	]);
     }
 }

@@ -24,4 +24,4 @@ Route::get('/logout', 'LoginController@logout');
 
 Route::middleware(['authenticated'])->group(function() {
 	Route::get('/profile', 'AdminController@index');
-})
+});
