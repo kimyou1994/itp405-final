@@ -71,6 +71,14 @@ class NoteController extends Controller
             'user_id' => Auth::user()->id
         ]);
         return redirect('/profile');
+    }
+
+    public function delete($note_id = null) 
+    {
+        if ($note_id)  {
+            DB::table('notes')->where('note_id', $note_id)->delete();
         }
+        return redirect('/profile');
+    }
 
 }

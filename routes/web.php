@@ -26,6 +26,7 @@ Route::get('/logout', 'LoginController@logout');
 Route::middleware(['authenticated'])->group(function() {
 	Route::get('/profile', 'AdminController@index');
 	Route::post('/notelists', 'NoteController@store');
+	Route::delete('/notelists/{id}', 'NoteController@delete');
 });
 
 Auth::routes();
