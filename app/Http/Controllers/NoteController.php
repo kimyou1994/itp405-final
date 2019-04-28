@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
+use Validator;
 
 class NoteController extends Controller
 {
@@ -21,16 +23,47 @@ class NoteController extends Controller
 	    }
 	    // Get video feed info (xml) from youtube, but only the title | http://php.net/manual/en/function.file-get-contents.php
 	    $video_feed = file_get_contents("http://www.youtube.com/oembed?url=".$url."&format=json");
-		// xml to object | http://php.net/manual/en/function.simplexml-load-string.php
-		//$video_obj = simplexml_load_string($video_feed);
-		// Get the title string to a variable
-		//$video_str = $video_obj->entry->title;
+
 		$data = json_decode($video_feed);
     	return view('note', [
-    		'url' => 'https://www.youtube.com/embed/' . $youtube_id,
+    		'youtube_id' => 'https://www.youtube.com/embed/' . $youtube_id,
     		'author' => $data->author_name,
     		'title' => $data->title,
     		'channel' => $data->author_url
     	]);
     }
+
+    public function note($note_id = null) 
+    {
+        if ($note_id) {
+            $note = DB::table('notes')
+                ->where('note_id', '=', $note_id)
+                ->get();
+        }
+        return view('note', [
+            'youtube_id' => $note->url,
+            'author' => $note->author,
+            'title' => $note->title,
+            'channel' => $note->channel
+        ]);
+    }
+    public function store(Request $request) 
+    {
+        $input = $request->all();
+        $validation = Validator::make($input, [
+            'note' => 'required|min:5'
+        ]);
+        if ($validation->fails()) {
+            return redirect('/playlists/new')
+                ->withInput()
+                ->withErrors($validation);
+        }
+
+        DB::table('notes')->insert([
+            'Name' => $request->name
+        ]);
+
+        return redirect('/profile');
+        }
+
 }

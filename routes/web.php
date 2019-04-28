@@ -13,6 +13,7 @@
 
 Route::get('/search', 'SearchController@index');
 Route::get('/notelists','NoteController@index');
+Route::get('/notelists/{id}', 'NoteController@note');
 
 Route::get('/signup', 'SignUpController@index');
 Route::post('/signup', 'SignUpController@signup');
@@ -24,4 +25,9 @@ Route::get('/logout', 'LoginController@logout');
 
 Route::middleware(['authenticated'])->group(function() {
 	Route::get('/profile', 'AdminController@index');
+	Route::post('/notelists', 'NoteController@store');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
