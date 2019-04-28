@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use Validator;
+use Auth;
 
 class NoteController extends Controller
 {
@@ -38,13 +39,16 @@ class NoteController extends Controller
         if ($note_id) {
             $note = DB::table('notes')
                 ->where('note_id', '=', $note_id)
-                ->get();
+                ->first();
+        }else {
+            return view('/profile');
         }
-        return view('note', [
+        return view('display', [
             'youtube_id' => $note->url,
             'author' => $note->author,
-            'title' => $note->title,
-            'channel' => $note->channel
+            'title' => $note->name,
+            'channel' => $note->channel,
+            'note' => $note->note
         ]);
     }
     public function store(Request $request) 
@@ -54,15 +58,18 @@ class NoteController extends Controller
             'note' => 'required|min:5'
         ]);
         if ($validation->fails()) {
-            return redirect('/playlists/new')
+            return redirect('/notelists')
                 ->withInput()
                 ->withErrors($validation);
         }
-
         DB::table('notes')->insert([
-            'Name' => $request->name
+            'name' => $request->name,
+            'url' => $request->url,
+            'author' => $request->author,
+            'channel' => $request->channel,
+            'note' => $request->note,
+            'user_id' => Auth::user()->id
         ]);
-
         return redirect('/profile');
         }
 
