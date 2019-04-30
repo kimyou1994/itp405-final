@@ -11,6 +11,7 @@
 |
 */
 
+Route::get('/', 'SearchController@index');
 Route::get('/search', 'SearchController@index');
 Route::get('/notelists','NoteController@index');
 Route::get('/notelists/{id}', 'NoteController@note');
@@ -27,6 +28,7 @@ Route::middleware(['authenticated'])->group(function() {
 	Route::get('/profile', 'AdminController@index');
 	Route::post('/notelists', 'NoteController@store');
 	Route::delete('/notelists/{id}', 'NoteController@delete');
+	Route::patch('/notelists/{id}', 'NoteController@edit');
 });
 
 Auth::routes();

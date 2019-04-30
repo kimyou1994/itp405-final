@@ -48,7 +48,8 @@ class NoteController extends Controller
             'author' => $note->author,
             'title' => $note->name,
             'channel' => $note->channel,
-            'note' => $note->note
+            'note' => $note->note,
+            'note_id' => $note->note_id
         ]);
     }
     public function store(Request $request) 
@@ -81,4 +82,13 @@ class NoteController extends Controller
         return redirect('/profile');
     }
 
+    public function edit(Request $request, $note_id = null)
+    {
+        if ($note_id) {
+            DB::table('notes')
+                ->where('note_id', $note_id)
+                ->update(['note' => $request->note]);
+        }
+        return redirect('/profile');
+    }
 }
