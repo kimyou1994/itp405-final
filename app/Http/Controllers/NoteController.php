@@ -52,6 +52,7 @@ class NoteController extends Controller
             'note_id' => $note->note_id
         ]);
     }
+
     public function store(Request $request) 
     {
         $input = $request->all();
@@ -59,7 +60,7 @@ class NoteController extends Controller
             'note' => 'required|min:5'
         ]);
         if ($validation->fails()) {
-            return redirect('/notelists')
+            return back()
                 ->withInput()
                 ->withErrors($validation);
         }

@@ -24,7 +24,7 @@
     </div>
   </div>
   <div class="w3-content" style="max-width:2000px;margin-top:46px">
-    <div class="w3-black" id="tour">
+    <div class="w3-black" id="tour" style = "height: 100%">
       <div class="w3-container w3-content w3-padding-64" style="max-width:1200px">
         @yield('main')
       </div>
