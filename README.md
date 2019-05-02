@@ -1,0 +1,1 @@
+![Image of Schema](images/schema.png)
